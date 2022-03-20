@@ -1,0 +1,32 @@
+﻿@model G191210068_Web_Muhasebe.Models.TarihSec
+@{
+    ViewData["Title"] = "Tarih Seç";
+}
+
+@inject LanguageService language
+<div class="section-title">
+    <h2>Tarih Aralığı Seçiniz</h2>
+</div>
+<div class="registration-form">
+    <form asp-action="TarihSec">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="IlkFaturaTarihi" class="control-label"></label>
+            <input asp-for="IlkFaturaTarihi" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+            <span asp-validation-for="IlkFaturaTarihi" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SonFaturaTarihi" class="control-label"></label>
+            <input asp-for="SonFaturaTarihi" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" />
+            <span asp-validation-for="SonFaturaTarihi" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="@language.Getkey("Seç")" class="btn btn-primary" asp-route-PdfId="@ViewBag.PdfId" />
+        </div>
+
+    </form>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

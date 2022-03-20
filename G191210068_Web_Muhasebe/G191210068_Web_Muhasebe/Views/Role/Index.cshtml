@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityRole>
+@{
+    ViewData["Title"] = "Index";
+}
+@inject LanguageService language
+
+<section id="pricing" class="pricing">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>@language.Getkey("Roller")</h2>
+            <p>@language.Getkey("Rolleri Gorüntüleyebilir ve Ekleme Yapabilirsiniz")</p>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel" style="background: linear-gradient(to right, #000000, #5c0000);">
+                    <div class="panel-body table-responsive">
+                        <table class="table" style="min-width:800px">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Rol ID
+                                    </th>
+
+                                    <th>
+                                        Rol
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var role in Model)
+                                {
+                                    <tr>
+                                        <td>@role.Id</td>
+                                        <td>@role.Name</td>
+                                    </tr>
+
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div style="text-align:center">
+
+            <a asp-action="Create" class="DetayBtn">@language.Getkey("Yeni Rol Ekle")</a>
+        </div>*@
+    </div>
+</section>
+

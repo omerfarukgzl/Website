@@ -1,0 +1,145 @@
+﻿@model IEnumerable<G191210068_Web_Muhasebe.Models.Cari>
+@inject LanguageService language
+@{
+    Layout = null;
+}
+<style>
+
+    thead, tfoot {
+        display: table-row-group
+    }
+
+    tr, th {
+        text-align: center
+    }
+</style>
+
+<h1 style="text-align: center; color: #2B606A">
+    CARİ BAKİYE RAPORU
+</h1>
+<h2 style="text-align:center">
+    Firma : Evsa
+</h2>
+
+<table class="table" width="100%" style="border-bottom: 1px solid #ddd;">
+    <thead style="background-color: #2B606A; color: white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirmaAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Yetkili)
+            </th>
+            <th>
+                BORÇ
+            </th>
+            <th>
+                ALACAK
+            </th>
+            <th>
+                Bakiye
+            </th>
+            <th>
+                DURUM
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: #C4D0CD ">
+
+        @foreach (var item in Model)
+        {
+            var bakiye = item.ToplamBorc - item.ToplamAlacak;
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirmaAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Yetkili)
+            </td>
+            <td>
+                @{
+                    var donusumlu_deger_Borc = string.Format("{0:0,0.000}", item.ToplamBorc);
+                }
+                @donusumlu_deger_Borc
+            </td>
+            <td>
+                @{
+                    var donusumlu_deger_Alacak = string.Format("{0:0,0.000}", item.ToplamAlacak);
+                }
+                @donusumlu_deger_Alacak
+            </td>
+            <td>
+                @{
+                    var donusumlu_deger_bakiye = string.Format("{0:0,0.000}", bakiye);
+                }
+                @donusumlu_deger_bakiye
+            </td>
+            @if (bakiye < 0)
+            {
+                <td>
+                    Cari Alacaklı
+                </td>
+            }
+            @if (bakiye > 0)
+            {
+                <td>
+                    Cari Borçlu
+                </td>
+            }
+            @if (bakiye == 0)
+            {
+                <td>
+                    Borç Alacak Eşit
+                </td>
+            }
+
+        </tr>
+        }
+
+
+    </tbody>
+</table>
+<br />
+<br />
+<br />
+<br />
+
+<table class="table" width="100%" style="border-bottom: 1px solid #ddd;">
+    <thead style="background-color: #0D8A6E; color: white">
+        <tr>
+            <th>
+                ALACAK
+            </th>
+            <th>
+                BORÇ
+            </th>
+            <th>
+                BAKİYE
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: #C4D0CD">
+        <tr>
+            <td>
+                @{
+                    var donusumlu_deger_CariToplamAlacak = string.Format("{0:0,0.000}", ViewBag.ToplamAlacak);
+                }
+                @donusumlu_deger_CariToplamAlacak
+            </td>
+            <td>
+                @{
+                    var donusumlu_deger_CariToplamBorc = string.Format("{0:0,0.000}", ViewBag.ToplamBorc);
+                }
+                @donusumlu_deger_CariToplamBorc
+            </td>
+            <td>
+                @{
+                    var donusumlu_deger_sonuc = string.Format("{0:0,0.000}", ViewBag.Bakiye);
+                }
+                @donusumlu_deger_sonuc
+            </td>
+         
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,285 @@
+﻿@model IEnumerable<G191210068_Web_Muhasebe.Models.PdfClass>
+@inject LanguageService language
+@{
+    Layout = null;
+}
+<style>
+
+    thead, tfoot {
+        display: table-row-group
+    }
+    tr, th {
+        text-align: center
+    }
+</style>
+
+<table class="table" width="100%" style="border-bottom: 1px solid #ddd;">
+    <thead style="background-color: #0D8A6E; color: white">
+        <tr>
+            <th>
+                FİRMA
+            </th>
+            <th>
+                YETKİLİ
+            </th>
+            <th>
+                GRUP
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: #C4D0CD">
+        <tr>
+            <td>
+                @ViewBag.CariAd
+            </td>
+            <td>
+                @ViewBag.Yetkili
+            </td>
+            <td>
+                @ViewBag.Grup
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<br />
+
+<table class="table" width="100%"  style="border-bottom: 1px solid #ddd;">
+    <thead style="background-color: #2B606A; color: white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CariIslemler.FaturaTarihi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CariIslemler.VadeTarihi)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.CariIslemler.Saat)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.CariIslemler.odemeSekli)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CariIslemler.Aciklama)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CariIslemler.Borc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CariIslemler.Alacak)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CariIslemler.islemTuru)
+            </th>
+            <th>
+                Bakiye
+            </th>
+        </tr>
+    </thead>
+    <tbody style="background-color: #C4D0CD ">
+
+        @{
+            int cariIslemId = -1;
+        }
+        @foreach (var item in Model)
+        {
+            var bakiye = item.CariIslemler.Borc - item.CariIslemler.Alacak;
+            if (cariIslemId != item.CariIslemler.CariIslemlerID)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CariIslemler.FaturaTarihi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CariIslemler.VadeTarihi)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.CariIslemler.Saat)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CariIslemler.odemeSekli)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CariIslemler.Aciklama)
+                    </td>
+                    <td>
+                        @{
+                            var donusumlu_deger_Borc = string.Format("{0:0,0.000}", item.CariIslemler.Borc);
+                        }
+                        @donusumlu_deger_Borc
+                        @*@Html.DisplayFor(modelItem => item.CariIslemler.Borc)*@
+                    </td>
+                    <td>
+                        @{
+                            var donusumlu_deger_Alacak = string.Format("{0:0,0.000}", item.CariIslemler.Alacak);
+                        }
+                        @donusumlu_deger_Alacak
+                        @*@Html.DisplayFor(modelItem => item.CariIslemler.Alacak)*@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CariIslemler.islemTuru)
+                    </td>
+                    <td>
+                        @{
+                            var donusumlu_deger_bakiye = string.Format("{0:0,0.000}", bakiye);
+                        }
+                        @donusumlu_deger_bakiye
+                        @*@bakiye*@
+                    </td>
+                </tr>
+
+                cariIslemId = item.CariIslemler.CariIslemlerID;
+
+                @foreach (var item2 in Model.Where(x => x.CariIslemler.CariIslemlerID == item.CariIslemler.CariIslemlerID).ToList())
+                {
+                    if (item2.CariIslemler.islemTuru == IslemTuru.Alis || item2.CariIslemler.islemTuru == IslemTuru.Satis)
+                    {
+                        <tr style="background-color: #E4EDEA">
+                            <td>
+                                |_____
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                Ürün Adı:
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.Urun.UrunAd)
+                            </td>
+                            <td>
+                                Miktar: @Html.DisplayFor(modelItem => item2.Urun.Miktar)
+                            </td>
+                            <td>
+                                @{
+                                    var donusumlu_deger_BirimFiyat = string.Format("{0:0,0.000}", item.Urun.BirimFiyat);
+                                }
+                                Birim F:  @donusumlu_deger_BirimFiyat @*@Html.DisplayFor(modelItem => item2.Urun.BirimFiyat)*@
+                            </td>
+                            <td>
+                               Tutar
+                            </td>
+                            <td>
+                                @{
+                                    var donusumlu_deger_Toplam = string.Format("{0:0,0.000}", item.Urun.Toplam);
+                                }
+                                @donusumlu_deger_Toplam
+                                @*@Html.DisplayFor(modelItem => item2.Urun.Toplam)*@
+                            </td>
+                        </tr>
+
+                    }
+                    else
+                    {
+                        <tr style="background-color: #E4EDEA">
+                            <td>
+                                +|_____
+                            </td>
+                            <td>
+
+                            </td>
+                            <td>
+                                İşlem Türü:
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item2.CariIslemler.islemTuru)
+                            </td>
+                            <td>
+                                @{
+                                    var donusumlu_deger_Odenen = string.Format("{0:0,0.000}", item.CariIslemler.Odenen);
+                                }
+                                Miktar: @donusumlu_deger_Odenen @*@Html.DisplayFor(modelItem => item2.CariIslemler.Odenen)*@
+                            </td>
+                            <td></td>
+                            <td>
+                                Tutar:
+                            </td>
+                            <td>
+                                @{
+                                    var donusumlu_deger_Odenen2 = string.Format("{0:0,0.000}", item.CariIslemler.Odenen);
+                                }
+                               @donusumlu_deger_Odenen2  @*@Html.DisplayFor(modelItem => item2.CariIslemler.Odenen)*@
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        }
+
+
+    </tbody>
+</table>
+<br />
+<br />
+<br />
+<br />
+
+@{
+    var sonuc = ViewBag.CariToplamBorc - ViewBag.CariToplamAlacak;
+}
+<table class="table" width="100%" style="border-bottom: 1px solid #ddd;">
+    <thead style="background-color: #0D8A6E; color: white">
+        <tr>
+            <th>
+                ALACAK
+            </th>
+            <th>
+                BORÇ
+            </th>
+            <th>
+                BAKİYE
+            </th>
+            <th>
+                DURUM
+            </th>
+
+        </tr>
+    </thead>
+    <tbody style="background-color: #C4D0CD">
+        <tr>
+            <td>
+                @{
+                    var donusumlu_deger_CariToplamAlacak = string.Format("{0:0,0.000}", ViewBag.CariToplamAlacak);
+                }
+                @donusumlu_deger_CariToplamAlacak
+                @*@ViewBag.CariToplamAlacak*@
+            </td>
+            <td>
+                @{
+                    var donusumlu_deger_CariToplamBorc = string.Format("{0:0,0.000}", ViewBag.CariToplamBorc);
+                }
+                @donusumlu_deger_CariToplamBorc
+                @*@ViewBag.CariToplamBorc*@
+            </td>
+            <td>
+                @{
+                    var donusumlu_deger_sonuc = string.Format("{0:0,0.000}", sonuc);
+                }
+                @donusumlu_deger_sonuc
+                @*@sonuc*@
+            </td>
+
+            @if (sonuc < 0)
+            {
+                <td>
+                    Cari Alacaklı
+                </td>
+            }
+            @if (sonuc > 0)
+            {
+                <td>
+                    Cari Borçlu
+                </td>
+            }
+            @if (sonuc == 0)
+            {
+                <td>
+                    Borç Alacak Eşit
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>
+
+
+

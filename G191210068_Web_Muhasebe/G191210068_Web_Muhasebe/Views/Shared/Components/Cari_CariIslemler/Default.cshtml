@@ -1,0 +1,122 @@
+﻿@model IEnumerable<G191210068_Web_Muhasebe.Models.CariIslemler>
+@using G191210068_Web_Muhasebe.Components
+@{
+    ViewData["Title"] = "Default";
+}
+@inject LanguageService language
+@*<div class="col-lg-10 col-md-12">*@
+
+<style>
+    .panel .panel-body .table tbody td {
+        border-right: 1px solid;
+    }
+</style>
+
+
+<div class="panel">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Tarihe Göre Arayınız.." title="Type in a name">
+    <div class="panel-body table-responsive">
+        <table class="table" style="min-width:800px" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FaturaTarihi)
+                    </th>
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.SevkTarihi)
+                        </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.VadeTarihi)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Saat)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.odemeSekli)
+                    </th>
+                    <th style="width:20%;">
+                        @Html.DisplayNameFor(model => model.Aciklama)                        
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Borc)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Alacak)
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FaturaTarihi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VadeTarihi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Saat)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.odemeSekli)
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.EvrakNo)
+                            </td>*@
+                        <td style="width:20%;text-align:left;">
+                            @Html.DisplayFor(modelItem => item.Aciklama)
+                        </td>
+                        <td>
+                            @{
+                                var donusumlu_deger_Borc = string.Format("{0:0,0.000}", item.Borc);
+                            }
+                            @donusumlu_deger_Borc
+                        </td>
+                        <td>
+                            @{
+                                var donusumlu_deger_Alacak = string.Format("{0:0,0.000}", item.Alacak);
+                            }
+                            @donusumlu_deger_Alacak
+                        </td>
+                        <td>
+                            <a asp-controller="CariIslemler" class="DetayBtn" asp-action="Details" asp-route-id="@item.CariIslemlerID" style="padding: 10px 20%">@language.Getkey("Detay")</a>
+                        </td>
+                        <td>
+                            <a asp-controller="CariIslemler" class="DuzenleBtn" asp-action="Edit" asp-route-id="@item.CariIslemlerID" style="padding: 10px 15%">@language.Getkey("Düzenle")</a>
+                        </td>
+                        <td>
+                            <a asp-controller="CariIslemler" class="SilBtn" asp-action="Delete" asp-route-id="@item.CariIslemlerID" style="padding: 10px 20%">@language.Getkey("Sil")</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+     function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+

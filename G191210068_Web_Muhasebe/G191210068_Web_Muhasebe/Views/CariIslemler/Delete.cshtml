@@ -1,0 +1,122 @@
+﻿@model G191210068_Web_Muhasebe.Models.CariIslemler
+
+@{
+    ViewData["Title"] = "Delete";
+}
+@inject LanguageService language
+<section id="services" class="services">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>@language.Getkey("Cari Sil")</h2>
+            <p>@language.Getkey("Silmek İstediğinize Eminmisiniz")</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <div class="icon-box">
+                    <div class="icon"><i class="bx bx-file"></i></div>
+                    <table class="table" style="min-width:300px; word-break:break-word;">
+                        <tbody>
+
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.FaturaTarihi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.FaturaTarihi)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.SevkTarihi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.SevkTarihi)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.VadeTarihi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.VadeTarihi)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Saat)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.Saat)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.odemeSekli)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.odemeSekli)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.EvrakNo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.EvrakNo)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Aciklama)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.Aciklama)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Borc)
+                                </td>
+                                <td>
+                                    @{
+                                        var donusumlu_deger_Borc = string.Format("{0:0,0.000}", Model.Borc);
+                                    }
+                                    @donusumlu_deger_Borc
+                                    @*@Html.DisplayFor(model => model.Borc)*@
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Alacak)
+                                </td>
+                                <td>
+                                    @{
+                                        var donusumlu_deger_Alacak = string.Format("{0:0,0.000}", Model.Alacak);
+                                    }
+                                    @donusumlu_deger_Alacak
+                                    @*@Html.DisplayFor(model => model.Alacak)*@
+                                </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.islemTuru)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.islemTuru)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="CariIslemlerID" />
+                        <input type="submit" value="@language.Getkey("Sil")" class="btn SilBtn" style="width: 60px; justify-content: center;"/> |
+                        <a asp-controller="Cari" asp-action="Details" asp-route-id="@Model.CariId">@language.Getkey("Geri Dön")</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

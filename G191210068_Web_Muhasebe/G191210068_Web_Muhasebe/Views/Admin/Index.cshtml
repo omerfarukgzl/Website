@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ApplicationUser>
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+@inject LanguageService language
+<section id="pricing" class="pricing">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>@language.Getkey("Kullanıcılar")</h2>
+            <p>@language.Getkey("Kullanıcıları Görüntüleyebilir ve İşlem Yapabilirsiniz")</p>
+        </div>
+        @if (Model.Any())
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel">
+                        <div class="panel-body table-responsive">
+                            <table class="table" style="min-width:800px">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            @language.Getkey("Kullanıcı") @language.Getkey("Ad")
+                                        </th>
+                                        <th>
+                                            @language.Getkey("Email") 
+                                        </th>
+                                        <th>
+                                            @language.Getkey("Kullanıcı")  @language.Getkey("Id")
+                                        </th>
+
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+                                            <td> @user.UserName</td>
+                                            <td>@user.Id</td>
+                                            <td> @user.Email </td>
+
+                                            <td>
+                                                <a class="SilBtn" style="width:auto" asp-controller="Admin" asp-action="Delete" asp-route-id="@user.Id">
+                                                    Sil
+                                                </a>
+                                            </td>
+                                            <td>
+
+                                                <a class="DuzenleBtn" style="width:auto" asp-controller="Admin" asp-action="Edit" asp-route-id="@user.Id">
+                                                    Düzenle
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        }
+
+        else
+        {
+            <div class="card">
+                <div class="card-header">
+                    No users created yet
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Use the button below to create a user
+                    </h5>
+                    <a class="btn btn-primary" style="width:auto"
+                       asp-controller="Admin" asp-action="Register">
+                        Add new user
+                    </a>
+                </div>
+            </div>
+        }
+     
+    </div>
+</section><!-- End Pricing Section -->

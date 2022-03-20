@@ -1,0 +1,84 @@
+﻿@model IEnumerable<G191210068_Web_Muhasebe.Models.VadeliIslemler>
+@using G191210068_Web_Muhasebe.Components
+@{
+    ViewData["Title"] = "Default";
+}
+@inject LanguageService language
+@*<div class="col-lg-10 col-md-12">*@
+<style>
+    .panel .panel-body .table tbody td {
+        border-right: 1px solid;
+    }
+</style>
+
+<div class="panel">
+    <div class="panel-body table-responsive">
+        <table class="table" style="min-width:800px" id="myTable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cari.FirmaAdi)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CariIslemler.FaturaTarihi)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CariIslemler.VadeTarihi)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CariIslemler.Saat)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CariIslemler.odemeSekli)
+                    </th>
+                    <th style="width:20%;">
+                        @Html.DisplayNameFor(model => model.CariIslemler.Aciklama)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CariIslemler.Borc)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CariIslemler.Alacak)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cari.FirmaAdi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CariIslemler.FaturaTarihi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CariIslemler.VadeTarihi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CariIslemler.Saat)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CariIslemler.odemeSekli)
+                        </td>
+                        <td  style="width:20%;">
+                            @Html.DisplayFor(modelItem => item.CariIslemler.Aciklama)
+                        </td>
+                        <td>
+                            @{
+                                var donusumlu_deger_Borc = string.Format("{0:0,0.000}", item.CariIslemler.Borc);
+                            }
+                            @donusumlu_deger_Borc
+                        </td>
+                        <td>
+                            @{
+                                var donusumlu_deger_Alacak = string.Format("{0:0,0.000}", item.CariIslemler.Alacak);
+                            }
+                            @donusumlu_deger_Alacak
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

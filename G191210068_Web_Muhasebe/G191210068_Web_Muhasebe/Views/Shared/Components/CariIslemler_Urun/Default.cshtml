@@ -1,0 +1,134 @@
+﻿@model IEnumerable<G191210068_Web_Muhasebe.Models.Urun>
+@using G191210068_Web_Muhasebe.Components
+@{
+    ViewData["Title"] = "Default";
+}
+@inject LanguageService language
+    <style>
+        .panel .panel-body .table tbody td{
+            border-right: 1px solid;
+        }
+    </style>
+<div class="col-lg-9 col-md-12">
+    <div class="panel">
+        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Tarihe Göre Arayınız.." title="Type in a name">
+        <div class="panel-body table-responsive">
+            <table class="table" id="myTable" style="min-width: 800px">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UrunAd)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Birim)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Miktar)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.BirimFiyat)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Iskonto)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Kdv)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.kdvDurum)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.iskontoTuru)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Toplam)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.GenelToplam)
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UrunAd)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Birim)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Miktar)
+                            </td>
+                            <td>
+                                @{ 
+                                    var donusumlu_deger_BirimFiyat = string.Format("{0:0,0.000}", item.BirimFiyat);                                   
+                                }
+                                @donusumlu_deger_BirimFiyat
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Iskonto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Kdv)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.kdvDurum)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.iskontoTuru)
+                            </td>
+                            <td>
+                                @{
+                                    var donusumlu_deger_Toplam = string.Format("{0:0,0.000}", item.Toplam);
+                                }
+                                @donusumlu_deger_Toplam
+                            </td>
+                            <td>
+                                @{
+                                    var donusumlu_deger_GenelToplam = string.Format("{0:0,0.000}", item.GenelToplam);
+                                }
+                                @donusumlu_deger_GenelToplam
+                            </td>
+                            <td>
+                                <a asp-controller="Urun" asp-action="Details" asp-route-id="@item.UrunID" class="DetayBtn" style="padding: 10px 15%">@language.Getkey("Detay")</a>
+                            </td>
+                            <td>
+                                <a asp-controller="Urun" asp-action="Edit" asp-route-id="@item.UrunID" class="DuzenleBtn" style="padding: 10px 20%">@language.Getkey("Düzenle")</a>
+                            </td>
+                            <td>
+                                <a asp-controller="Urun" asp-action="Delete" asp-route-id="@item.UrunID" class="SilBtn" style="padding: 10px 20%">@language.Getkey("Sil")</a>
+                            </td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

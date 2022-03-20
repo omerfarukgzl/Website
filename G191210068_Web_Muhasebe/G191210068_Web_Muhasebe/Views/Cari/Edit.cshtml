@@ -1,0 +1,84 @@
+﻿@model G191210068_Web_Muhasebe.Models.Cari
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@inject LanguageService language
+<div class="registration-form">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="CariID" />
+        <input type="hidden" asp-for="UserId" value="@ViewBag.userId" />       
+        <div class="form-group">
+            <label asp-for="FirmaAdi" class="control-label"></label>
+            <input asp-for="FirmaAdi" class="form-control" />
+            <span asp-validation-for="FirmaAdi" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Yetkili" class="control-label"></label>
+            <input asp-for="Yetkili" class="form-control" />
+            <span asp-validation-for="Yetkili" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Telefon" class="control-label"></label>
+            <input asp-for="Telefon" class="form-control" />
+            <span asp-validation-for="Telefon" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Fax" class="control-label"></label>
+            <input asp-for="Fax" class="form-control" />
+            <span asp-validation-for="Fax" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Il" class="control-label"></label>
+            <input asp-for="Il" class="form-control" />
+            <span asp-validation-for="Il" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Ilçe" class="control-label"></label>
+            <input asp-for="Ilçe" class="form-control" />
+            <span asp-validation-for="Ilçe" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Adres" class="control-label"></label>
+            <input asp-for="Adres" class="form-control" />
+            <span asp-validation-for="Adres" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SevkAdresi" class="control-label"></label>
+            <input asp-for="SevkAdresi" class="form-control" />
+            <span asp-validation-for="SevkAdresi" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PostaKodu" class="control-label"></label>
+            <input asp-for="PostaKodu" class="form-control" />
+            <span asp-validation-for="PostaKodu" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Aciklama" class="control-label"></label>
+            <input asp-for="Aciklama" class="form-control" />
+            <span asp-validation-for="Aciklama" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Grup" class="control-label"></label>
+            <select asp-for="Grup" asp-items="Html.GetEnumSelectList<Grup>()" class="form-control"></select>
+            <span asp-validation-for="Grup" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="@language.Getkey("Kaydet")" class="btn btn-primary" />
+        </div>
+        <div>
+            <a asp-action="Index">@language.Getkey("Geri Dön")</a>
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

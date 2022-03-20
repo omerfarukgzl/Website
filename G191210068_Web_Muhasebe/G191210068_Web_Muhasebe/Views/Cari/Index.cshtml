@@ -1,0 +1,300 @@
+﻿@model IEnumerable<G191210068_Web_Muhasebe.Models.Cari>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@inject LanguageService language
+
+<style>
+    .panel .panel-body table tbody {
+        display: block;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+</style>
+
+<div class="container overflow: hidden;" style="max-width: 90%;">
+    <div class="accordion" id="accordionExample">
+        <div class="section-title">
+            <div>
+                <h2>
+                    <a asp-action="Create">@language.Getkey("Yeni Cari Ekle")</a>
+                </h2>
+            </div>
+            <br />
+            <div>
+
+                <h2>
+                    <a asp-action="TarihSec" asp-route-PdfId="1">@language.Getkey("Cari İşlem Raporu")</a>@*Tüm İşemler*@
+                </h2>
+                <h2>
+                    <a asp-action="TarihSec" asp-route-PdfId="3">@language.Getkey("Hesap Ekstresi")</a> @*Tüm Cari Ve İşlemleri*@
+                </h2>
+                <h2>
+                    <a asp-action="AllCariPdf">@language.Getkey("Cari Rapor")</a> @*Cariler*@
+                </h2>
+            </div>
+           
+        </div>
+        @{int i = 0;}
+        @foreach (var item in Model)
+        {
+            <div class="item" id="accordion">
+                <div class="item-header" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                                data-target="#collapseOne_@i" aria-expanded="false" aria-controls="collapseOne">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    @Html.DisplayFor(modelItem => item.FirmaAdi)
+                                </div>
+
+                                @{
+                                    var donusumlu_deger_Bakiye2 = string.Format("{0:0,0.000}", item.Bakiye);
+                                }
+                                <div class="col-lg-1 ">
+                                   Bakiye:
+                                </div>
+                                @if (item.Bakiye < 0)
+                                {
+                                    <div class="col-lg-1 " style="background-color: #af0000; text-align: center; color: white;">
+                                        @donusumlu_deger_Bakiye2
+                                    </div>
+
+                                }
+                                @if (item.Bakiye > 0)
+                                {
+                                    <div class="col-lg-1" style="background-color: #29b120; text-align: center; color: white;" >
+                                        @donusumlu_deger_Bakiye2
+                                    </div>
+
+                                }
+                                @if (item.Bakiye == 0)
+                                {
+                                    <div class="col-lg-1" style="background-color:lightgray;text-align:center">
+
+                                        @{
+                                            var donusumlu_deger_ToplamBorc2 = string.Format("{0:0,0.000}", item.ToplamBorc);
+                                        }
+                                        @{
+                                            var donusumlu_deger_ToplamAlacak2 = string.Format("{0:0,0.000}", item.ToplamAlacak);
+                                        }
+                                        @donusumlu_deger_Bakiye2
+
+                                    </div>
+
+                                }
+
+                                <div class="col-lg-1">
+                                    <i class="fa fa-angle-up">▼</i>
+                                </div>
+
+                            </div>                       
+                        </button>
+                    </h2>
+                </div>
+                <div id="collapseOne_@i" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                        </div>
+                        <div class="col-lg-4">
+                            <table class="table" style="min-width:300px; word-break:break-word;">
+                                <tbody style="font-size: x-large; background-color: lavender;">
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.ToplamBorc)
+                                        </td>
+                                        <td>
+                                            @{
+                                                var donusumlu_deger_ToplamBorc = string.Format("{0:0,0.000}", item.ToplamBorc);
+                                            }
+                                            @donusumlu_deger_ToplamBorc
+                                            @*@Html.DisplayFor(model => model.ToplamBorc)*@
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.ToplamAlacak)
+                                        </td>
+                                        <td>
+                                            @{
+                                                var donusumlu_deger_ToplamAlacak = string.Format("{0:0,0.000}", item.ToplamAlacak);
+                                            }
+                                            @donusumlu_deger_ToplamAlacak
+                                            @*@Html.DisplayFor(model => model.ToplamAlacak)*@
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        @if (item.Bakiye < 0)
+                        {
+                            <div class="col-lg-1 " style="background-color: #af0000; text-align: center; color: white; padding: 30px;">
+                               Bakiye:  @donusumlu_deger_Bakiye2
+                            </div>
+
+                        }
+                        @if (item.Bakiye > 0)
+                        {
+                            <div class="col-lg-1" style="background-color: #29b120; text-align: center; color: white; padding: 30px;">
+                                Bakiye: @donusumlu_deger_Bakiye2
+                            </div>
+
+                        }
+                        @if (item.Bakiye == 0)
+                        {
+                            <div class="col-lg-1" style="background-color: lightgray; text-align: center; padding: 30px;">
+                               Bakiye:  @donusumlu_deger_Bakiye2
+                            </div>
+                        }
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-3">
+
+                            <table class="table" style="min-width:300px; word-break:break-word;">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.FirmaAdi)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FirmaAdi)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.Yetkili)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Yetkili)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.Telefon)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Telefon)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.Il)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Il)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.Ilçe)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Ilçe)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.Adres)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Adres)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.Email)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.SevkAdresi)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.SevkAdresi)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.PostaKodu)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PostaKodu)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.Aciklama)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Aciklama)
+                                        </td>
+                                    </tr>
+                                    @*<tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.ToplamBorc)
+                                        </td>
+                                        <td>
+                                            @{
+                                                var donusumlu_deger_ToplamBorc = string.Format("{0:0,0.000}", item.ToplamBorc);
+                                            }
+                                            @donusumlu_deger_ToplamBorc
+                                           
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.ToplamAlacak)
+                                        </td>
+                                        <td>
+                                            @{
+                                                var donusumlu_deger_ToplamAlacak = string.Format("{0:0,0.000}", item.ToplamAlacak);
+                                            }
+                                            @donusumlu_deger_ToplamAlacak
+                                         
+                                        </td>
+                                    </tr>*@
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayNameFor(model => model.Grup)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Grup)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-lg-9" id="@i">
+                            @await Component.InvokeAsync("Cari_CariIslemler", new { id = item.CariID })
+
+                        </div>
+                    </div>
+                    <a asp-action="Details" class="DetayBtn" asp-route-id="@item.CariID">@language.Getkey("Cari İşlemler")</a>
+
+                    <a asp-action="Edit" class="DuzenleBtn" asp-route-id="@item.CariID">@language.Getkey("Düzenle")</a>
+
+                    <a asp-action="Delete" class="SilBtn" asp-route-id="@item.CariID">@language.Getkey("Sil")</a>
+                </div>
+            </div>
+
+
+
+            i++;
+
+        }
+
+    </div>
+</div>
+
+
+
+
+

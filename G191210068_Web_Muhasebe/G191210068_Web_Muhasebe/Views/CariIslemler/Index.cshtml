@@ -1,0 +1,94 @@
+﻿@model IEnumerable<G191210068_Web_Muhasebe.Models.CariIslemler>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@inject LanguageService language
+
+<p>
+    <a asp-action="Create">@language.Getkey("Yeni Oluştur")</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FaturaTarihi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SevkTarihi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VadeTarihi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Saat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.odemeSekli)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EvrakNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aciklama)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Borc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alacak)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.islemTuru)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FaturaTarihi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SevkTarihi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VadeTarihi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Saat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.odemeSekli)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EvrakNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aciklama)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Borc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Alacak)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.islemTuru)
+                </td>
+
+                <td>
+                    <a asp-controller="CariIslemler" class="btn btn-success" asp-action="Details" asp-route-id="@item.CariIslemlerID">@language.Getkey("Cari İşlem Bilgileri")</a>
+                </td>
+                <td>
+                    <a asp-controller="CariIslemler" class="btn btn-info" asp-action="Edit" asp-route-id="@item.CariIslemlerID">@language.Getkey("Düzenle")</a>
+                </td>
+                <td>
+                    <a asp-controller="CariIslemler" class="btn btn-danger" asp-action="Delete" asp-route-id="@item.CariIslemlerID">@language.Getkey("Sil")</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

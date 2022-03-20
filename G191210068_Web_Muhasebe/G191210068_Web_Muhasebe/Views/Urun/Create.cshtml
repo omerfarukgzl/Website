@@ -1,0 +1,197 @@
+﻿@model G191210068_Web_Muhasebe.Models.Urun
+
+@{
+    ViewData["Title"] = "Create";
+}
+@inject LanguageService language
+<div class="section-title">
+    <h3><span> @ViewBag.FirmaAdi</span></h3>
+    @*<p>@language.Getkey("Ürün Bilgilerini Kontrol Edebilirsiniz")</p>*@
+</div>
+<div class="registration-form">
+    <div style="border-color:#000000; margin-left: 60%;">
+        <a asp-controller="Urun" asp-action="Cancel" asp-route-id="@ViewBag.CariIslemID" class="btn SilBtn">İşlemi İptal Et</a>
+    </div>
+    <br />
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="UrunAd" class="control-label"></label>
+            <input asp-for="UrunAd" class="form-control" />
+            <span asp-validation-for="UrunAd" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Birim" class="control-label"></label>
+            <select asp-for="Birim" asp-items="Html.GetEnumSelectList<Birim>()" class="form-control"></select>
+            <span asp-validation-for="Birim" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Miktar" class="control-label"></label>
+            <input asp-for="Miktar" value="1" type="number" class="form-control" id="miktar" />
+            <span asp-validation-for="Miktar" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="BirimFiyat" class="control-label"></label>
+            <input asp-for="BirimFiyat" value="1" type="number" class="form-control" id="fiyat" />
+            <span asp-validation-for="BirimFiyat" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Iskonto" class="control-label"></label>
+            <input asp-for="Iskonto" value="0" type="number" class="form-control" id="iskonto" />
+            <span asp-validation-for="Iskonto" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Kdv" class="control-label"></label>
+            <input asp-for="Kdv" value="0" type="number" class="form-control" id="kdv" />
+            <span asp-validation-for="Kdv" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="kdvDurum" class="control-label"></label>
+            <select asp-for="kdvDurum" asp-items="Html.GetEnumSelectList<KdvDurum>()" class="form-control" id="kdvDurum"></select>
+            <span asp-validation-for="kdvDurum" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="iskontoTuru" class="control-label"></label>
+            <select asp-for="iskontoTuru" asp-items="Html.GetEnumSelectList<IskontoTuru>()" class="form-control" id="iskontoTuru"></select>
+            <span asp-validation-for="iskontoTuru" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Toplam" class="control-label"></label>
+            <input type="number" asp-for="Toplam" value="1" class="form-control" id="toplam" readonly step="any" />
+            <span asp-validation-for="Toplam" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="GenelToplam" class="control-label"></label>
+            <input type="number" asp-for="GenelToplam" value="1" class="form-control" id="genelToplam" readonly step="any" />
+            <span asp-validation-for="GenelToplam" class="text-danger"></span>
+        </div>
+
+        @if (ViewBag.CariIslemID != null)
+        {
+            <input asp-for="IslemID" value="@ViewBag.CariIslemID" class="form-control" hidden />
+        }
+        <div class="form-group">
+            <input type="submit" value="@language.Getkey("Ürün Kaydet")" class="btn btn-primary" id="create" />
+        </div>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#miktar").on("change", function () {
+                Islem();
+            });
+            $("#fiyat").on("change", function () {
+                Islem();
+            });
+            $("#kdv").on("change", function () {
+                Islem();
+            });
+            $("#iskonto").on("change", function () {
+                Islem();
+            });
+            $("#kdvDurum").on("change", function () {
+                Islem();
+            });
+            $("#iskontoTuru").on("change", function () {
+                Islem();
+            });
+        });
+        function Islem() {
+            var toplam;
+            var genelToplam;
+            var miktar = parseFloat($("#miktar").val());
+            var fiyat = parseFloat($("#fiyat").val());
+            var kdv = parseFloat($("#kdv").val());
+            var iskonto = parseFloat($("#iskonto").val());
+            var kdvDurum = $("#kdvDurum").val();
+            var iskontoTuru = $("#iskontoTuru").val();
+            var hesap = (miktar * fiyat);
+            if (kdvDurum == 2) {
+                var tempToplam = (hesap / (100 + kdv) * 100);
+                var kdvTutar = (tempToplam * (kdv / 100));
+                tempToplam = hesap - kdvTutar;
+                if (iskontoTuru == 1) //Kdv_Dahil
+                {
+
+                    var iskontoTutar = (tempToplam * (iskonto / 100));
+                    tempToplam = tempToplam - iskontoTutar;
+                    toplam = tempToplam;
+                    genelToplam = hesap - (hesap * (iskonto / 100));
+                    $("#toplam").val(toplam); $("#genelToplam").val(genelToplam);
+                }
+                if (iskontoTuru == 2) {
+
+                    var iskontoTutar = (tempToplam * (iskonto / 100));
+                    tempToplam = tempToplam - iskontoTutar;
+                    toplam = tempToplam;
+                    genelToplam = hesap - (hesap * (iskonto / 100));
+                    $("#toplam").val(toplam); $("#genelToplam").val(genelToplam);
+                }
+                if (iskontoTuru == 3)//Tl_Ara
+                {
+
+                    var iskontoTutar = iskonto;
+                    tempToplam = tempToplam - iskontoTutar;
+                    toplam = tempToplam;
+                    genelToplam = (toplam + (toplam * (kdv / 100)));
+                    $("#toplam").val(toplam); $("#genelToplam").val(genelToplam);
+                }
+                if (iskontoTuru == 4)//Tl_Genel
+                {
+                    var iskontoTutar = iskonto;
+                    var tempToplam = (hesap - iskontoTutar);
+                    genelToplam = tempToplam;
+                    toplam = (tempToplam / (100 + kdv) * 100);
+                    $("#toplam").val(toplam); $("#genelToplam").val(genelToplam);
+                }
+
+            }
+            if (kdvDurum == 1)//Kdv_Haric
+            {
+                var tempGenelToplam = (hesap + (hesap * (kdv / 100)));
+                if (iskontoTuru == 1) {
+                    var iskontoTutar = (tempGenelToplam * (iskonto / 100));
+                    toplam = hesap - (hesap * (iskonto / 100));
+                    tempGenelToplam = tempGenelToplam - iskontoTutar;
+                    genelToplam = tempGenelToplam;
+                    $("#toplam").val(toplam);
+                    $("#genelToplam").val(genelToplam);
+                }
+                if (iskontoTuru == 2) {
+                    var iskontoTutar = (tempGenelToplam * (iskonto / 100));
+                    toplam = hesap - (hesap * (iskonto / 100));
+                    tempGenelToplam = tempGenelToplam - iskontoTutar;
+                    genelToplam = tempGenelToplam;
+                    $("#toplam").val(toplam);
+                    $("#genelToplam").val(genelToplam);
+                }
+                if (iskontoTuru == 3) {
+                    var iskontoTutar = iskonto;
+                    toplam = hesap - iskontoTutar;
+                    tempGenelToplam = (hesap + (toplam * (kdv / 100)) - iskontoTutar);
+                    genelToplam = tempGenelToplam;
+                    $("#toplam").val(toplam);
+                    $("#genelToplam").val(genelToplam);
+                }
+                if (iskontoTuru == 4) {
+                    var iskontoTutar = iskonto;
+                    var temp = tempGenelToplam - iskontoTutar
+                    genelToplam = temp;
+                    toplam = (temp / (100 + kdv) * 100);
+                    $("#toplam").val(toplam);
+                    $("#genelToplam").val(genelToplam);
+                }
+            }
+
+        }
+    </script>
+}
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>*@
+

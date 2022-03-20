@@ -1,0 +1,358 @@
+﻿@model IEnumerable<G191210068_Web_Muhasebe.Models.Cari>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+@inject LanguageService language
+
+
+<div class="container overflow: hidden;" style="max-width: 90%;">
+    <div class="accordion" id="accordionExample">
+        <div class="item" id="accordion">
+            <div class="item-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseOne_1" aria-expanded="false" aria-controls="collapseOne">
+                        Vadeli İşlemler
+
+                        <i class="fa fa-angle-up">▼</i>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne_1" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-lg-12">
+                        @await Component.InvokeAsync("Vadeli_Islemler")
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="item" id="accordion">
+            <div class="item-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseOne_2" aria-expanded="false" aria-controls="collapseOne">
+                        Borçlu Cariler
+
+                        <i class="fa fa-angle-up">▼</i>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne_2" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="panel">
+                            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Tarihe Göre Arayınız.." title="Type in a name">
+                            <div class="panel-body table-responsive">
+                                <table class="table" style="min-width:800px" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.FirmaAdi)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Yetkili)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Telefon)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Adres)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Email)
+                                            </th>
+                                            <th style="width:20%;">
+                                                @Html.DisplayNameFor(model => model.Aciklama)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.ToplamBorc)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.ToplamAlacak)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Bakiye)
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item2 in Model)
+                                        {
+
+
+
+                                            if (item2.Bakiye < 0)
+                                            {
+
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item2.FirmaAdi)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item2.Yetkili)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item2.Telefon)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item2.Adres)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item2.Email)
+                                                    </td>
+
+                                                    <td style="width:20%;">
+                                                        @Html.DisplayFor(modelItem => item2.Aciklama)
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            var donusumlu_deger_Borc = string.Format("{0:0,0.000}", item2.ToplamBorc);
+                                                        }
+                                                        @donusumlu_deger_Borc
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            var donusumlu_deger_Alacak = string.Format("{0:0,0.000}", item2.ToplamAlacak);
+                                                        }
+                                                        @donusumlu_deger_Alacak
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            var donusumlu_deger_Bakiyee = string.Format("{0:0,0.000}", item2.Bakiye);
+                                                        }
+                                                        @donusumlu_deger_Bakiyee
+                                                    </td>
+
+
+                                                </tr>
+
+                                            }
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="item" id="accordion">
+            <div class="item-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseOne_3" aria-expanded="false" aria-controls="collapseOne">
+                        Alacaklı Cariler
+
+                        <i class="fa fa-angle-up">▼</i>
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne_3" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <br />
+                <br />
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="panel">
+                            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Tarihe Göre Arayınız.." title="Type in a name">
+                            <div class="panel-body table-responsive">
+                                <table class="table" style="min-width:800px" id="myTable">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.FirmaAdi)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Yetkili)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Telefon)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Adres)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Email)
+                                            </th>
+                                            <th style="width:20%;">
+                                                @Html.DisplayNameFor(model => model.Aciklama)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.ToplamBorc)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.ToplamAlacak)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Bakiye)
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item2 in Model)
+                                        {
+
+                                            if (item2.Bakiye > 0)
+                                            {
+
+                                                <tr>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item2.FirmaAdi)
+                                                    </td>
+
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item2.Yetkili)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item2.Telefon)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item2.Adres)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item2.Email)
+                                                    </td>
+
+                                                    <td style="width:20%;">
+                                                        @Html.DisplayFor(modelItem => item2.Aciklama)
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            var donusumlu_deger_Borc = string.Format("{0:0,0.000}", item2.ToplamBorc);
+                                                        }
+                                                        @donusumlu_deger_Borc
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            var donusumlu_deger_Alacak = string.Format("{0:0,0.000}", item2.ToplamAlacak);
+                                                        }
+                                                        @donusumlu_deger_Alacak
+                                                    </td>
+                                                    <td>
+                                                        @{
+                                                            var donusumlu_deger_Bakiyee = string.Format("{0:0,0.000}", item2.Bakiye);
+                                                        }
+                                                        @donusumlu_deger_Bakiyee
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<br />
+<br />
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel">       
+            <div class="panel-body table-responsive">
+                <table class="table" style="min-width:800px" id="myTable">
+                    <thead style="background-color: #184236;">
+                        <tr>
+                            <th>
+                                TOPLAM ALACAK
+                            </th>
+                            <th>
+                                TOPLAM BORÇ
+                            </th>
+                            <th>
+                                BAKİYE
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody style="background-color: #001d48;">
+                        <tr>
+                            <td>
+                                @{
+                                    var donusumlu_deger_CariToplamAlacak = string.Format("{0:0,0.000}", ViewBag.ToplamAlacak);
+                                }
+                                @donusumlu_deger_CariToplamAlacak
+                            </td>
+                            <td>
+                                @{
+                                    var donusumlu_deger_CariToplamBorc = string.Format("{0:0,0.000}", ViewBag.ToplamBorc);
+                                }
+                                @donusumlu_deger_CariToplamBorc
+                            </td>
+                            <td>
+                                @{
+                                    var donusumlu_deger_sonuc = string.Format("{0:0,0.000}", ViewBag.Bakiye);
+                                }
+                                @donusumlu_deger_sonuc
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*<table class="table" width="100%" style="border-bottom: 1px solid #ddd;">
+        <thead style="background-color: #0D8A6E; color: white">
+            <tr>
+                <th>
+                    TOPLAM ALACAK
+                </th>
+                <th>
+                    TOPLAM BORÇ
+                </th>
+                <th>
+                    BAKİYE
+                </th>
+            </tr>
+        </thead>
+        <tbody style="background-color: #C4D0CD">
+            <tr>
+                <td>
+                    @{
+                        var donusumlu_deger_CariToplamAlacak = string.Format("{0:0,0.000}", ViewBag.ToplamAlacak);
+                    }
+                    @donusumlu_deger_CariToplamAlacak
+                </td>
+                <td>
+                    @{
+                        var donusumlu_deger_CariToplamBorc = string.Format("{0:0,0.000}", ViewBag.ToplamBorc);
+                    }
+                    @donusumlu_deger_CariToplamBorc
+                </td>
+                <td>
+                    @{
+                        var donusumlu_deger_sonuc = string.Format("{0:0,0.000}", ViewBag.Bakiye);
+                    }
+                    @donusumlu_deger_sonuc
+                </td>
+
+            </tr>
+        </tbody>
+    </table>*@
+
+

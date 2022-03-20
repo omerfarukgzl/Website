@@ -1,0 +1,75 @@
+﻿@model G191210068_Web_Muhasebe.Models.CariIslemler
+
+@{
+    ViewData["Title"] = "Edit";
+}
+@inject LanguageService language
+
+<div class="registration-form">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="CariIslemlerID" />
+        <div class="form-group">
+            <label asp-for="FaturaTarihi" class="control-label"></label>
+            <input asp-for="FaturaTarihi" class="form-control" />
+            <span asp-validation-for="FaturaTarihi" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="SevkTarihi" class="control-label"></label>
+            <input asp-for="SevkTarihi" class="form-control" />
+            <span asp-validation-for="SevkTarihi" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="VadeTarihi" class="control-label"></label>
+            <input asp-for="VadeTarihi" class="form-control" />
+            <span asp-validation-for="VadeTarihi" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Saat" class="control-label"></label>
+            <input asp-for="Saat" class="form-control" />
+            <span asp-validation-for="Saat" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="odemeSekli" class="control-label"></label>
+            <select asp-for="odemeSekli" asp-items="Html.GetEnumSelectList<OdemeSekli>()" class="form-control"></select>
+            <span asp-validation-for="odemeSekli" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="EvrakNo" class="control-label"></label>
+            <input asp-for="EvrakNo" class="form-control" />
+            <span asp-validation-for="EvrakNo" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Aciklama" class="control-label"></label>
+            <textarea asp-for="Aciklama" class="form-control"></textarea>
+            @*<input asp-for="Aciklama" class="form-control" />*@
+            <span asp-validation-for="Aciklama" class="text-danger"></span>
+        </div>
+        @if (ViewBag.CariId != null)
+        {
+            <input asp-for="CariId" value="@ViewBag.CariId" class="form-control" hidden />
+            <input asp-for="Borc" value="@ViewBag.Borc" class="form-control" hidden />
+            <input asp-for="Alacak" value="@ViewBag.Alacak" class="form-control" hidden />
+            <input asp-for="islemTuru" value="@ViewBag.islemTuru" class="form-control" hidden />
+            <input asp-for="GenelToplam" value="@ViewBag.GenelToplam" class="form-control" hidden />
+        }
+
+        <div class="form-group">
+            <input type="submit" value="@language.Getkey("Kaydet")" class="btn btn-primary" />  |
+            <a asp-controller="Cari" asp-action="Details" asp-route-id="@Model.CariId">@language.Getkey("Geri Dön")</a>
+        </div>
+        <div>
+            <a asp-controller="CariIslemler" asp-action="Delete" asp-route-id="@Model.CariIslemlerID" class="SilBtn">@language.Getkey("Sil")</a>
+        </div>
+    </form>
+</div>
+@if (Model.islemTuru == IslemTuru.Alis || Model.islemTuru == IslemTuru.Satis)
+{
+    <div class="row" style="justify-content:center;">
+        @await Component.InvokeAsync("CariIslemler_Urun", new { id = Model.CariIslemlerID })
+    </div>
+}
+
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }

@@ -1,0 +1,89 @@
+﻿@model IEnumerable<G191210068_Web_Muhasebe.Models.Urun>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@inject LanguageService language
+
+<p>
+    <a asp-action="Create">@language.Getkey("Yeni Oluştur")</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UrunAd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Miktar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirimFiyat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Iskonto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Kdv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.kdvDurum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.iskontoTuru)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Toplam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GenelToplam)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UrunAd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Birim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Miktar)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirimFiyat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Iskonto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Kdv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.kdvDurum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.iskontoTuru)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Toplam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GenelToplam)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.UrunID">@language.Getkey("Düzenle")</a> |
+                    <a asp-action="Details" asp-route-id="@item.UrunID">@language.Getkey("Detay")</a> |
+                    <a asp-action="Delete" asp-route-id="@item.UrunID">@language.Getkey("Sil")</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

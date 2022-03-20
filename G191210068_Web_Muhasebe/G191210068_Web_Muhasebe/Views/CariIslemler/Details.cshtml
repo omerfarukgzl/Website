@@ -1,0 +1,263 @@
+﻿@model G191210068_Web_Muhasebe.Models.CariIslemler
+@using G191210068_Web_Muhasebe.Components
+@{
+    ViewData["Title"] = "Details";
+}
+@inject LanguageService language
+
+<section id="services" class="services">
+    <div class="container" data-aos="fade-up" style="max-width: 100%">
+
+        <div class="section-title">
+            <h2>@language.Getkey("Cari İşlem")</h2>
+            <h3>@language.Getkey("Cari İşlem Detay") <span>@language.Getkey("Ürün")</span></h3>
+            <p>@language.Getkey("Cari İşlem Detayını ve Ürünleri Kontrol Edebilirsiniz")</p>
+        </div>
+        @if (Model.islemTuru == IslemTuru.Alis || Model.islemTuru == IslemTuru.Satis)
+        {
+            <div class="row ">
+                <div class="col-lg-3 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" style="justify-content:center">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bx-file"></i></div>
+                        <h4>@Html.DisplayFor(model => model.FaturaTarihi)</h4>
+                        <table class="table" style="min-width:300px; word-break:break-word;">
+                            <tbody>
+                                <tr>
+                                    <td style="background-color: #D9EAF7">
+                                       Sağdaki İşlemler Öncesi Bakiye
+                                    </td>
+                                    <td style="background-color: #ffc6c6; font-size: 25px; ">
+                                        @{
+                                            var donusumlu_deger_SonBakiye = string.Format("{0:0,0.000}", Model.SonDurum);
+                                        }
+                                        @donusumlu_deger_SonBakiye
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.FaturaTarihi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.FaturaTarihi)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.SevkTarihi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.SevkTarihi)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.VadeTarihi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.VadeTarihi)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.Saat)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.Saat)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.odemeSekli)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.odemeSekli)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.EvrakNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.EvrakNo)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.Aciklama)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.Aciklama)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.Borc)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var donusumlu_deger_Borc = string.Format("{0:0,0.000}", Model.Borc);
+                                        }
+                                        @donusumlu_deger_Borc
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.Alacak)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var donusumlu_deger_Alacak = string.Format("{0:0,0.000}", Model.Alacak);
+                                        }
+                                        @donusumlu_deger_Alacak
+                                    </td>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.islemTuru)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.islemTuru)
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div>
+                            <a asp-controller="Urun" class="btn btn-dark" asp-action="Create" asp-route-id="@Model.CariIslemlerID">Ürün Ekle</a>
+                            <a asp-controller="CariIslemler" asp-action="Delete" style="width: 60px; justify-content: center;" asp-route-id="@Model.CariIslemlerID" class="SilBtn">@language.Getkey("Sil")</a>
+                        </div>
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@Model.CariIslemlerID">@language.Getkey("Düzenle")</a> |
+                            <a asp-controller="Cari" asp-action="Details" asp-route-id="@Model.CariId">@language.Getkey("Geri Dön")</a>
+
+                        </div>
+                    </div>
+                </div>
+                @await Component.InvokeAsync("CariIslemler_Urun", new { id = Model.CariIslemlerID });
+            </div>
+        }
+        else
+        {
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" style="justify-content:center">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bx-file"></i></div>
+                        <h4>@Html.DisplayFor(model => model.FaturaTarihi)</h4>
+                        <table class="table" style="min-width:300px; word-break:break-word;">
+                            <tbody>
+                                <tr>
+                                    <td style="background-color: #D9EAF7">
+                                        Bu Yapılan İşlem Öncesi Bakiye
+                                    </td>
+                                    <td style="background-color: #ffc6c6; font-size: 25px; ">
+                                        @{
+                                            var donusumlu_deger_SonBakiye2 = string.Format("{0:0,0.000}", Model.SonDurum);
+                                        }
+                                        @donusumlu_deger_SonBakiye2
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.FaturaTarihi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.FaturaTarihi)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.SevkTarihi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.SevkTarihi)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.VadeTarihi)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.VadeTarihi)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.Saat)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.Saat)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.odemeSekli)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.odemeSekli)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.EvrakNo)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.EvrakNo)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.Aciklama)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.Aciklama)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.Borc)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var donusumlu_deger_Borc = string.Format("{0:0,0.000}", Model.Borc);
+                                        }
+                                        @donusumlu_deger_Borc
+                                        @*@Html.DisplayFor(model => model.Borc)*@
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.Alacak)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var donusumlu_deger_Alacak = string.Format("{0:0,0.000}", Model.Alacak);
+                                        }
+                                        @donusumlu_deger_Alacak
+                                        @*@Html.DisplayFor(model => model.Alacak)*@
+                                    </td>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayNameFor(model => model.islemTuru)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(model => model.islemTuru)
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        <div>
+                            <a asp-controller="Urun" class="btn btn-dark" asp-action="Create" asp-route-id="@Model.CariIslemlerID">Ürün Ekle</a>
+                            <a asp-controller="CariIslemler" asp-action="Delete" asp-route-id="@Model.CariIslemlerID" class="SilBtn">@language.Getkey("Sil")</a>
+                        </div>
+                        <div>
+                            <a asp-action="Edit" asp-route-id="@Model.CariIslemlerID">@language.Getkey("Düzenle")</a> |
+                            <a asp-controller="Cari" asp-action="Details" asp-route-id="@Model.CariId">@language.Getkey("Geri Dön")</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section><!-- End Services Section -->

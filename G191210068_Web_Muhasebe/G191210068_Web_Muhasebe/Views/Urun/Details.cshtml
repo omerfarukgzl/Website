@@ -1,0 +1,130 @@
+﻿@model G191210068_Web_Muhasebe.Models.Urun
+
+@{
+    ViewData["Title"] = "Details";
+}
+@inject LanguageService language
+
+<section id="services" class="services">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2> Ürün Detay</h2>
+            <h3><span> @ViewBag.FirmaAdi</span></h3>
+            @*<p>@language.Getkey("Ürün Bilgilerini Kontrol Edebilirsiniz")</p>*@
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <div class="icon-box">
+                    <div class="icon"><i class="bx bx-file"></i></div>
+                    <h4>@Html.DisplayFor(model => model.UrunAd)</h4>
+                    <table class="table" style="min-width:300px; word-break:break-word;">
+                        <tbody>                           
+                            <tr>
+                                <td>
+                                   Fatura Tarihi
+                                </td>
+                                <td>
+                                    @ViewBag.FaturaTarihi
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.UrunAd)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.UrunAd)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Birim)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.Birim)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Miktar)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.Miktar)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.BirimFiyat)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.BirimFiyat)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Iskonto)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.Iskonto)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Kdv)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.Kdv)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.kdvDurum)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.kdvDurum)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.iskontoTuru)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.iskontoTuru)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.Toplam)
+                                </td>
+                                <td>
+                                    @{
+                                        var donusumlu_deger_Toplam = string.Format("{0:0,0.000}", Model.Toplam);
+                                    }
+                                    @donusumlu_deger_Toplam
+                                    @*@Html.DisplayFor(model => model.Toplam)*@
+                                </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayNameFor(model => model.GenelToplam)
+                                </td>
+                                <td>
+                                    @{
+                                        var donusumlu_deger_GenelToplam = string.Format("{0:0,0.000}", Model.GenelToplam);
+                                    }
+                                    @donusumlu_deger_GenelToplam
+                                    @*@Html.DisplayFor(model => model.GenelToplam)*@
+                                </td>
+                            </tr>
+                            </tr>
+                        </tbody>
+                    </table>          
+                    <div>
+                        <a asp-action="Edit" asp-route-id="@Model.UrunID">@language.Getkey("Düzenle")</a> |
+                        <a asp-controller="CariIslemler" asp-action="Details" asp-route-id="@ViewBag.CariIslemID">@language.Getkey("Geri Dön")</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
